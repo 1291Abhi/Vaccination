@@ -19,7 +19,7 @@ import java.util.Date;
 @Table(name = "dose2")
 public class Dose2 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
     @Column(name = "dose_id")
