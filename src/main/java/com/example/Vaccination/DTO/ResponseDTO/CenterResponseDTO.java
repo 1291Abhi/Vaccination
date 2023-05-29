@@ -1,5 +1,6 @@
 package com.example.Vaccination.DTO.ResponseDTO;
 
+import com.example.Vaccination.Enum.CenterType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,7 +9,11 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserResponseDTO {
+
+public class CenterResponseDTO {
     String name;
-    String message;
+
+    String location;
+
+    CenterType centerType;
 }

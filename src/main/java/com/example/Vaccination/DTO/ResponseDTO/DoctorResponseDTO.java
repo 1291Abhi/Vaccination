@@ -8,7 +8,9 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserResponseDTO {
+public class DoctorResponseDTO {
     String name;
-    String message;
+    String emailId;
+    String mobNo;
+    CenterResponseDTO centerResponseDTO;
 }

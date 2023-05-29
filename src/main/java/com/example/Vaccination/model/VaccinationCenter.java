@@ -2,10 +2,7 @@ package com.example.Vaccination.model;
 
 import com.example.Vaccination.Enum.CenterType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
@@ -16,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level= AccessLevel.PRIVATE)
+@Builder
 @Table(name="vaccination_center")
 public class VaccinationCenter {
     @Id

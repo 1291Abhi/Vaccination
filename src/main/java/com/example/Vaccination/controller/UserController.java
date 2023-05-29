@@ -23,5 +23,18 @@ public class UserController {
         UserResponseDTO savedUser=userService.addUser(user);
         return new ResponseEntity(savedUser, HttpStatus.CREATED);
     }
+    //find by emialid
+
+    //update the name of user by given mobile number
+
+    //all the user who have not taken a single dose
+
+    //all the user who have taken dose1 but not dose2
+
+    // all the user who are fully vacinated
+
+    //all the male user who have not taken a single dose
+
+    //all female user who have taken full dose
 
 }

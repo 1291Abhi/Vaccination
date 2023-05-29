@@ -2,10 +2,7 @@ package com.example.Vaccination.model;
 
 import com.example.Vaccination.Enum.Gender;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
@@ -15,6 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @FieldDefaults(level= AccessLevel.PRIVATE)
 @Table(name = "doctor")
 public class Doctor{
