@@ -31,10 +31,10 @@ public class DoctorServiceImpl implements DoctorService {
         VaccinationCenter center=optionalCenter.get();
         Doctor doctor= DoctorTransformer.doctorRequestDTOToCenter(doctorRequestDTO);
         doctor.setVaccinationCenter(center);
+
         //add doctor to current list of doctor in center
-        List<Doctor> doctorList=center.getDoctorList();
-        doctorList.add(doctor);
-        center.setDoctorList(doctorList);
+        center.getDoctorList().add(doctor);
+
         VaccinationCenter saveCenter=centerRepository.save(center); //saves both doc and center
 
         CenterResponseDTO centerResponseDTO= CenterTransformer.CenterToCenterResponseDTO(center);
