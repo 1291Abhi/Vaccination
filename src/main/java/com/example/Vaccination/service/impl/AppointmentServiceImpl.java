@@ -3,11 +3,13 @@ package com.example.Vaccination.service.impl;
 import com.example.Vaccination.DTO.RequestDTO.AppointmentRequestDTO;
 import com.example.Vaccination.DTO.ResponseDTO.AppointmentResponseDTO;
 import com.example.Vaccination.Enum.DoseNo;
+import com.example.Vaccination.Enum.VaccineType;
 import com.example.Vaccination.exception.DoctorNotFoundException;
+import com.example.Vaccination.exception.Dose1NotTakenException;
+import com.example.Vaccination.exception.Dose1VaccineNotMatchWithCurrentVaccineTypeException;
 import com.example.Vaccination.exception.UserNotFoundException;
-import com.example.Vaccination.model.Doctor;
-import com.example.Vaccination.model.Dose1;
-import com.example.Vaccination.model.User;
+import com.example.Vaccination.model.*;
+import com.example.Vaccination.repository.AppointmentRepository;
 import com.example.Vaccination.repository.CenterRepository;
 import com.example.Vaccination.repository.DoctorRepository;
 import com.example.Vaccination.repository.UserRepository;
@@ -24,6 +26,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     UserRepository userRepository;
     @Autowired
+    AppointmentRepository appointmentRepository;
+
+    @Autowired
     CenterRepository centerRepository;
     @Autowired
     DoctorRepository doctorRepository;
@@ -34,7 +39,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     Dose2Service dose2Service;
 
     @Override
-    public AppointmentResponseDTO bookAppointment(AppointmentRequestDTO appointmentRequestDTO) throws UserNotFoundException, DoctorNotFoundException {
+    public AppointmentResponseDTO bookAppointment(AppointmentRequestDTO appointmentRequestDTO) throws UserNotFoundException, DoctorNotFoundException, Dose1NotTakenException, Dose1VaccineNotMatchWithCurrentVaccineTypeException {
         Optional<User> userOptional=userRepository.findById(appointmentRequestDTO.getUserId());
         if(!userOptional.isPresent()){
             throw new UserNotFoundException("User doesn't Exists");
@@ -53,7 +58,22 @@ public class AppointmentServiceImpl implements AppointmentService {
             user.setDose1(dose1);
         }
         else{
-            //do later
+            Dose2 dose2=dose2Service.createDose2(user,appointmentRequestDTO.getVaccineType());
+            user.setDose2Taken(true);
+            user.setDose2(dose2);
         }
+        Appointment appointment=new Appointment();
+        appointment.setUser(user);
+        appointment.setDoctor(doctor);
+        appointment.setDoseNo(DoseNo.valueOf(appointmentRequestDTO.getDoseNo().toString()));
+        appointmentRepository.save(appointment);
+        doctor.getAppointmentList().add(appointment);
+        AppointmentResponseDTO appointmentResponseDTO=new AppointmentResponseDTO();
+        appointmentResponseDTO.setDoctorName(doctor.getName());
+        appointmentResponseDTO.setUserName(user.getName());
+        appointmentResponseDTO.setDateOfAppointment(appointment.getDateOfAppointment());
+        appointmentResponseDTO.setVaccineType(appointmentRequestDTO.getVaccineType());
+        appointmentResponseDTO.setDoseNo(appointmentRequestDTO.getDoseNo());
+        return appointmentResponseDTO;
     }
 }

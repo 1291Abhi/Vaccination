@@ -17,7 +17,7 @@ public class AppointmentResponseDTO {
     String appointmentNo;
     Date dateOfAppointment;
     DoseNo doseNo;
-    CenterResponseDTO centerResponseDTO;
+//    CenterResponseDTO centerResponseDTO;
     String doctorName;
     VaccineType vaccineType;
 }
